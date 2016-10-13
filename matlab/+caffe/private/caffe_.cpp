@@ -271,6 +271,26 @@ static void get_net(MEX_ARGS) {
   mxFree(phase_name);
 }
 
+// Usage: caffe_('net_set_phase', hNet, phase_name)
+static void net_set_phase(MEX_ARGS) {
+  mxCHECK(nrhs == 2 && mxIsStruct(prhs[0]) && mxIsChar(prhs[1]),
+    "Usage: caffe_('net_set_phase', hNet, phase_name)");
+  Net<float>* net = handle_to_ptr<Net<float> >(prhs[0]);
+  char* phase_name = mxArrayToString(prhs[1]);
+  Phase phase;
+  if (strcmp(phase_name, "train") == 0) {
+    phase = TRAIN;
+  }
+  else if (strcmp(phase_name, "test") == 0) {
+    phase = TEST;
+  }
+  else {
+    mxERROR("Unknown phase");
+  }
+  net->SetPhase(phase);
+  mxFree(phase_name);
+}
+
 // Usage: caffe_('net_get_attr', hNet)
 static void net_get_attr(MEX_ARGS) {
   mxCHECK(nrhs == 1 && mxIsStruct(prhs[0]),

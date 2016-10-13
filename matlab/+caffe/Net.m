@@ -68,6 +68,13 @@ classdef Net < handle
       self.layer_names = self.attributes.layer_names;
       self.blob_names = self.attributes.blob_names;
     end
+    function set_phase(self, phase_name)
+      CHECK(ischar(phase_name), 'phase_name must be a string');
+      CHECK(strcmp(phase_name, 'train') || strcmp(phase_name, 'test'), ...
+            sprintf('phase_name can only be %strain%s or %stest%s', ...
+            char(39), char(39), char(39), char(39)));
+      caffe_('net_set_phase', self.hNet_self, phase_name);
+    end
     function layer = layers(self, layer_name)
       CHECK(ischar(layer_name), 'layer_name must be a string');
       layer = self.layer_vec(self.name2layer_index(layer_name));
