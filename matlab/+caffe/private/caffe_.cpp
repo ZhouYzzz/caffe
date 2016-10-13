@@ -548,6 +548,7 @@ static handler_registry handlers[] = {
   { "solver_solve",       solver_solve    },
   { "solver_step",        solver_step     },
   { "get_net",            get_net         },
+  { "net_set_phase",      net_set_phase   },
   { "net_get_attr",       net_get_attr    },
   { "net_forward",        net_forward     },
   { "net_backward",       net_backward    },
