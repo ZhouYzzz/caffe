@@ -197,6 +197,15 @@ static void get_solver(MEX_ARGS) {
   mxFree(solver_file);
 }
 
+// Usage: caffe_('solver_set_iter', hSolver, iter)
+static void solver_set_iter(MEX_ARGS) {
+  mxCHECK(nrhs == 2 && mxIsStruct(prhs[0]) && mxIsDouble(prhs[1]),
+      "Usage: caffe_('solver_set_iter', hSolver, iter)");
+  Solver<float>* solver = handle_to_ptr<Solver<float> >(prhs[0]);
+  int iter = mxGetScalar(prhs[1]);
+  solver->set_iter(iter);
+}
+
 // Usage: caffe_('solver_get_attr', hSolver)
 static void solver_get_attr(MEX_ARGS) {
   mxCHECK(nrhs == 1 && mxIsStruct(prhs[0]),
@@ -544,6 +553,7 @@ static handler_registry handlers[] = {
   { "get_solver",         get_solver      },
   { "solver_get_attr",    solver_get_attr },
   { "solver_get_iter",    solver_get_iter },
+  { "solver_set_iter",    solver_set_iter },
   { "solver_restore",     solver_restore  },
   { "solver_solve",       solver_solve    },
   { "solver_step",        solver_step     },
